@@ -1,40 +1,3 @@
-//package pages;
-//
-//import org.openqa.selenium.By;
-//import org.openqa.selenium.WebDriver;
-//
-//public class RegistrationPage {
-//    private WebDriver driver;
-//
-//    private By firstName = By.cssSelector("#form-field-name");
-//    private By lastName = By.cssSelector("#form-field-field_60edae3");
-//    private By genderMale = By.cssSelector("#form-field-field_579f0e8-0");
-//    private By genderFemale = By.cssSelector("#form-field-field_579f0e8-1");
-//    private By email = By.cssSelector("#form-field-field_f19d3d6");
-//    private By phone = By.cssSelector("#form-field-email");
-//    private By submitBtn = By.cssSelector(".elementor-button.elementor-size-sm");
-//    private By address = By.cssSelector("#form-field-field_883df88");
-//    private By city = By.cssSelector("#form-field-field_5a281aa");
-//
-//    public RegistrationPage(WebDriver driver) {
-//        this.driver = driver;
-//    }
-//
-//    public void enterFirstName(String v) { driver.findElement(firstName).clear(); driver.findElement(firstName).sendKeys(v); }
-//    public void enterLastName(String v) { driver.findElement(lastName).clear(); driver.findElement(lastName).sendKeys(v); }
-//    public void enterEmail(String v) { driver.findElement(email).clear(); driver.findElement(email).sendKeys(v); }
-//    public void enterPhone(String v) { driver.findElement(phone).clear(); driver.findElement(phone).sendKeys(v); }
-//    public void enterAddress(String v) { driver.findElement(address).clear(); driver.findElement(address).sendKeys(v); }
-//    public void enterCity(String v) { driver.findElement(city).clear(); driver.findElement(city).sendKeys(v); }
-//    public void selectGender(String gender) {
-//        if (gender.equalsIgnoreCase("male")) {
-//            driver.findElement(genderMale).click();
-//        } else if (gender.equalsIgnoreCase("female")) {
-//            driver.findElement(genderFemale).click();
-//        }
-//    }
-//    public void submitForm() { driver.findElement(submitBtn).click(); }
-//}
 package pages;
 
 import org.openqa.selenium.By;
@@ -113,17 +76,42 @@ public class RegistrationPage {
             element.click();
         }
     }
-    public void clickCheckBox() {
-        WebElement checkbox1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#form-field-field_801783e")));
-        if (!checkbox1.isSelected()) {
-            checkbox1.click();
-        }
+//    public void clickCheckBox() {
+//        WebElement checkbox1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#form-field-field_801783e")));
+//        if (!checkbox1.isSelected()) {
+//            checkbox1.click();
+//        }
+//
+//        WebElement checkbox2 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#form-field-field_2e50be6")));
+//        if (!checkbox2.isSelected()) {
+//            checkbox2.click();
+//        }
+//    }
+public void clickCheckBox() {
+    safeClick(By.cssSelector("#form-field-field_801783e"));
+    safeClick(By.cssSelector("#form-field-field_2e50be6"));
+}
 
-        WebElement checkbox2 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#form-field-field_2e50be6")));
-        if (!checkbox2.isSelected()) {
-            checkbox2.click();
+    private void safeClick(By locator) {
+    WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+
+    try {
+        // ניסיון רגיל
+        element.click();
+    } catch (Exception e) {
+        // גלילה + נסיון שני
+        try {
+            ((org.openqa.selenium.JavascriptExecutor) driver)
+                    .executeScript("arguments[0].scrollIntoView(true);", element);
+            element.click();
+        } catch (Exception ex) {
+            // ניסיון אחרון - JavaScript Click
+            ((org.openqa.selenium.JavascriptExecutor) driver)
+                    .executeScript("arguments[0].click();", element);
         }
     }
+}
+
     public void submitForm() {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(submitBtn));
         element.click();
