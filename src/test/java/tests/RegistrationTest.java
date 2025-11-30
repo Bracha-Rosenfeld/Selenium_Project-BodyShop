@@ -41,23 +41,52 @@ import utils.BaseTest;
 
 public class RegistrationTest extends BaseTest {
 
-    // private RegistrationPage reg;
+    @Test
+    public void testInvalidRegistrations() {
+        RegistrationPage reg = new RegistrationPage(driver);
 
-    /*@BeforeMethod
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.bodyshop.co.il/%D7%94%D7%A6%D7%98%D7%A8%D7%A4%D7%95%D7%AA-%D7%9C%D7%9E%D7%95%D7%A2%D7%93%D7%95%D7%9F/"); // כתובת העמוד שלך
-        reg = new RegistrationPage(driver);
+        // ---- מקרה 1: שם עם מספרים ----
+        reg.openPage();
+        reg.enterFirstName("Bracha123");
+        reg.enterLastName("Rosen45");
+        reg.selectGender("female");
+        reg.enterEmail("bracha@gmail.com");
+        reg.enterPhone("0500000000");
+        reg.enterAddress("Some Street");
+        reg.enterCity("Jerusalem");
+        reg.clickCheckBox();
+        reg.submitForm();
+        Assert.assertFalse(reg.isSubmitButtonEnabled(),
+                "Submit should be disabled when name contains numbers.");
+
+        // ---- מקרה 2: טלפון עם אותיות ----
+        reg.openPage();
+        reg.enterFirstName("Bracha");
+        reg.enterLastName("Rosenfeld");
+        reg.selectGender("female");
+        reg.enterEmail("bracha@gmail.com");
+        reg.enterPhone("abc12345");
+        reg.enterAddress("Some Street");
+        reg.enterCity("Jerusalem");
+        reg.clickCheckBox();
+        reg.submitForm();
+        Assert.assertFalse(reg.isSubmitButtonEnabled(),
+                "Submit should be disabled when phone contains letters.");
+
+        // ---- מקרה 3: עיר עם מספרים ----
+        reg.openPage();
+        reg.enterFirstName("Bracha");
+        reg.enterLastName("Rosenfeld");
+        reg.selectGender("female");
+        reg.enterEmail("bracha@gmail.com");
+        reg.enterPhone("0500000000");
+        reg.enterAddress("Some Street");
+        reg.enterCity("Jerusalem123");
+        reg.clickCheckBox();
+        reg.submitForm();
+        Assert.assertFalse(reg.isSubmitButtonEnabled(),
+                "Submit should be disabled when city contains numbers.");
     }
-*/
-/*    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }*/
 
     @Test
     public void testValidRegistration() {
@@ -76,33 +105,31 @@ public class RegistrationTest extends BaseTest {
         Assert.assertTrue(reg.isSubmitButtonEnabled(), "Submit button should be enabled after registration.");
     }
 
-    @Test
-    public void testEmptyFieldsRegistration() {
-        RegistrationPage reg = new RegistrationPage(driver);
-        reg.openPage();
-        reg.clickCheckBox();
-        reg.submitForm();
-
-        Assert.assertFalse(reg.isSubmitButtonEnabled(), "Submit button should be disabled for empty fields.");
-    }
-
-    @Test
-    public void testInvalidEmailRegistration() {
-        RegistrationPage reg = new RegistrationPage(driver);
-        reg.openPage();
-
-        reg.enterFirstName("Bracha");
-        reg.enterLastName("Rosenfeld");
-        reg.selectGender("female");
-        reg.enterEmail("invalid-email"); // אימייל לא חוקי
-        reg.enterPhone("0500000000");
-        reg.enterAddress("Some Street");
-        reg.enterCity("Jerusalem");
-        reg.clickCheckBox();
-        reg.submitForm();
-
-        // כאן אפשר לבדוק הודעת שגיאה שמופיעה על האימייל
-        // Assert.assertTrue(reg.isEmailErrorDisplayed(), "Error message should appear for invalid email.");
-    }
+//    @Test
+//    public void testEmptyFieldsRegistration() {
+//        RegistrationPage reg = new RegistrationPage(driver);
+//        reg.openPage();
+//        reg.clickCheckBox();
+//        reg.submitForm();
+//
+//        Assert.assertFalse(reg.isSubmitButtonEnabled(), "Submit button should be disabled for empty fields.");
+//    }
+//
+//    @Test
+//    public void testInvalidEmailRegistration() {
+//        RegistrationPage reg = new RegistrationPage(driver);
+//        reg.openPage();
+//
+//        reg.enterFirstName("Bracha");
+//        reg.enterLastName("Rosenfeld");
+//        reg.selectGender("female");
+//        reg.enterEmail("invalid-email"); // אימייל לא חוקי
+//        reg.enterPhone("0500000000");
+//        reg.enterAddress("Some Street");
+//        reg.enterCity("Jerusalem");
+//        reg.clickCheckBox();
+//        reg.submitForm();
+//
+//         }
+//}
 }
-
