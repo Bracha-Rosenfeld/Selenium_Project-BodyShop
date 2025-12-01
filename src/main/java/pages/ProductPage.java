@@ -24,7 +24,7 @@ public class ProductPage {
     public By girls_marshmallow_fairy=By.cssSelector("div[data-id='1388']");
     private By addToCartButton = By.cssSelector("button.single_add_to_cart_button");
     private By plusButton = By.cssSelector(".woocommerce-mini-cart-item .quantity .plus");
-    // --- Methods ---
+
 
     public void openSpecificProduct(By specificProduct) {
         WebElement product = wait.until(ExpectedConditions.elementToBeClickable(specificProduct));

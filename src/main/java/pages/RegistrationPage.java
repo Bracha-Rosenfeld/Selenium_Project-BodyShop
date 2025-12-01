@@ -96,16 +96,13 @@ public void clickCheckBox() {
     WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
 
     try {
-        // ניסיון רגיל
         element.click();
     } catch (Exception e) {
-        // גלילה + נסיון שני
         try {
             ((org.openqa.selenium.JavascriptExecutor) driver)
                     .executeScript("arguments[0].scrollIntoView(true);", element);
             element.click();
         } catch (Exception ex) {
-            // ניסיון אחרון - JavaScript Click
             ((org.openqa.selenium.JavascriptExecutor) driver)
                     .executeScript("arguments[0].click();", element);
         }
