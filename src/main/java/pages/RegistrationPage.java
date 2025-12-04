@@ -76,17 +76,7 @@ public class RegistrationPage {
             element.click();
         }
     }
-//    public void clickCheckBox() {
-//        WebElement checkbox1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#form-field-field_801783e")));
-//        if (!checkbox1.isSelected()) {
-//            checkbox1.click();
-//        }
-//
-//        WebElement checkbox2 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#form-field-field_2e50be6")));
-//        if (!checkbox2.isSelected()) {
-//            checkbox2.click();
-//        }
-//    }
+
 public void clickCheckBox() {
     safeClick(By.cssSelector("#form-field-field_801783e"));
     safeClick(By.cssSelector("#form-field-field_2e50be6"));
