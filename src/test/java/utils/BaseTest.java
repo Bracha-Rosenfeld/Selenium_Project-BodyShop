@@ -3,10 +3,7 @@ package utils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.CategoryPage;
 import pages.HomePage;
@@ -40,10 +37,10 @@ public class BaseTest {
     }
 
 //    @AfterMethod(alwaysRun = true)
-//    @AfterClass
-//    public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+  @AfterClass
+  public void tearDown() {
+      if (driver != null) {
+          driver.quit();
+      }
+  }
 }
