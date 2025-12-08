@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,7 +22,7 @@ public class RegistrationPage {
     private By address = By.cssSelector("#form-field-field_883df88");
     private By city = By.cssSelector("#form-field-field_5a281aa");
     private By submitBtn = By.cssSelector(".elementor-button.elementor-size-sm");
-
+    private By errorMsg = By.cssSelector("div.elementor-message.elementor-message-danger[role='alert']");
     public void openPage() {
         driver.get(PAGE_URL);
     }
@@ -107,4 +108,21 @@ public void clickCheckBox() {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(submitBtn));
         return element.isEnabled();
     }
+    public boolean isErrorDisplayed() {
+//        try {
+//            return driver.findElement(errorMsg).isDisplayed();
+//        } catch (NoSuchElementException e) {
+//            return false;
+//        }
+//        return !driver.findElements(errorMsg)
+//                .isEmpty();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        try {
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    errorMsg) )!= null;
+        } catch (TimeoutException e) {
+            return false; // אם לא הופיע, מחזיר false
+        }
+    }
+
 }
