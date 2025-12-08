@@ -39,7 +39,16 @@ public class ProductPage {
     }
     public void increase_quantity(int quantity) {
         for (int i = 0; i < quantity-1; i++) {
+            String oldSubtotal = driver
+                    .findElement(By.cssSelector("p.woocommerce-mini-cart__total .amount"))
+                    .getText();
             wait.until(ExpectedConditions.elementToBeClickable(plusButton)).click();
+            wait.until(d -> {
+                String newSubtotal = d
+                        .findElement(By.cssSelector("p.woocommerce-mini-cart__total .amount"))
+                        .getText();
+                return !newSubtotal.equals(oldSubtotal);
+            });
         }
     }
 }
