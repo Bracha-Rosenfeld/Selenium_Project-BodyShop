@@ -39,3 +39,7 @@ build/
 .idea/
 out/
 *.class
+
+afterChange.png
+beforeChange.png
+CartResults.xlsx
